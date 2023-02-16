@@ -1,0 +1,37 @@
+ import random
+
+class RockPaperScissors:
+    def _init_(self, player_name):
+        self.player_name = player_name
+        self.highest_score = 0
+        self.score = 0
+    
+    def play(self, player_move):
+        moves = ['rock', 'paper', 'scissors']
+        computer_move = random.choice(moves)
+        
+        if player_move == computer_move:
+            result = 'draw'
+        elif player_move == 'rock' and computer_move == 'scissors':
+            result = 'win'
+        elif player_move == 'scissors' and computer_move == 'paper':
+            result = 'win'
+        elif player_move == 'paper' and computer_move == 'rock':
+            result = 'win'
+        else:
+            result = 'lose'
+        
+        if result == 'win':
+            self.score += 1
+   game = RockPaperScissors('John')
+print('Highest score:', game.get_highest_score())
+
+while True:
+    player_move = input('Enter your move (rock, paper, or scissors), or type q to quit: ')
+    if player_move == 'q':
+        break
+    
+    result = game.play(player_move)
+    print(result)
+    print('Current score:', game.get_score())
+    print('Highest score:', game.get_highest_score()

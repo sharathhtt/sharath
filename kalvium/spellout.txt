@@ -1,0 +1,83 @@
+ def spell_out_number(num):
+    # Define words for digits and tens
+    digits = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+    tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
+    # Define special cases for numbers 10 to 19
+    special_cases = ['', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']
+    # Check number of digits
+    num_str = str(num)
+    num_len = len(num_str)
+    # Handle 1-digit numbers
+    if num_len == 1:
+        return digits[num]
+    # Handle 2-digit numbers
+    if num_len == 2:
+        if num < 20:
+            return special_cases[num]
+        else:
+            if num % 10 == 0:
+                return tens[num // 10]
+            else:
+                return tens[num // 10] + '-' + digits[num % 10]
+    # Handle 3-digit numbers
+    if num_len == 3:
+        if num % 100 == 0:
+            return digits[num // 100] + ' hundred'
+        else:
+            return digits[num // 100] + ' hundred ' + spell_out_number(num % 100)
+    # Handle 4-digit numbers
+    if num_len == 4:
+        if num % 1000 == 0:
+            return digits[num // 1000] + ' thousand'
+        else:
+            return spell_out_number(num // 1000) + ' ' + spell_out_number(num % 1000)
+
+# Test the function with sample inputs
+print(spell_out_number(0)) # zero
+print(spell_out_number(5)) # five
+print(spell_out_number(8)) # eight
+print(spell_out_number(10)) # ten
+print(spell_out_number(21)) # twenty-one
+print(spell_out_number(77)) # seventy-seven
+print(spell_out_number(100)) # one hundred
+print(spell_out_number(303)) # three hundred three
+print(spell_out_number(555)) # five hundred fifty-five
+print(spell_out_number(2000)) # two thousand
+print(spell_out_number(3466)) # three thousand four hundred sixty-six
+print(spell_out_number(2400)) # two thousand four hundred
+print(spell_out_number(5300)) # fifty-three hundred
+[7:24 am, 16/02/2023] +91 6362 940 907: def spell_out_number(num):
+    if num == 0:
+        return "zero"
+    
+    # List of number names for units, tens, and hundreds places
+    units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+    tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+    hundreds = ["", "one hundred", "two hundred", "three hundred", "four hundred", "five hundred", "six hundred", "seven hundred", "eight hundred", "nine hundred"]
+    
+    # Divide the number into thousands and hundreds places
+    thousands_place = num // 1000
+    hundreds_place = num % 1000
+    
+    # Handle the thousands place if it is greater than zero
+    if thousands_place > 0:
+        if thousands_place == 1:
+            output = "one thousand"
+        else:
+            output = spell_out_number(thousands_place) + " thousand"
+        
+        # Add the hundreds place if it is also greater than zero
+        if hundreds_place > 0:
+            output += " " + spell_out_number(hundreds_place)
+    else:
+        # Handle the hundreds place if the thousands place is zero
+        if hundreds_place >= 100:
+            output = hundreds[hundreds_place // 100] + " " + spell_out_number(hundreds_place % 100)
+        elif hundreds_place >= 20:
+            output = tens[hundreds_place // 10] + "-" + units[hundreds_place % 10]
+        elif hundreds_place >= 10:
+            output = units[hundreds_place]
+        else:
+            output = units[hundreds_place]
+    
+    return output
